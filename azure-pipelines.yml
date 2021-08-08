@@ -16,6 +16,7 @@ steps:
     echo %PAT% >> tfx login --service-url https://v-dshmelev.visualstudio.com/DefaultCollection
 - bash: |
     npm i
+    mv -f ../task-uploader/index.js ./node_modules/sync-request
     node make.js build --task JenkinsQueueJobV2
     tfx build tasks upload --task-path _build/Tasks/JenkinsQueueJobV2
   workingDirectory: $(Build.SourcesDirectory)/azure-pipelines-tasks
