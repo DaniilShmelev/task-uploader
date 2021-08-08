@@ -1,0 +1,18 @@
+resources:
+  repositories:
+  - repository: tasks
+    type: github
+    endpoint: DaniilShmelev
+    name: microsoft/azure-pipelines-tasks
+
+steps:
+- checkout: self
+- checkout: tasks
+- bash: |
+    sudo npm i -g tfx-cli
+    echo %PAT% >> tfx login --service-url https://v-dshmelev.visualstudio.com/DefaultCollection
+- bash: |
+    npm i
+    node make.js build --task JenkinsQueueJobV2
+    tfx build tasks upload --task-path _build/Tasks/JenkinsQueueJobV2
+  workingDirectory: $(Build.SourcesDirectory)/azure-pipelines-tasks
