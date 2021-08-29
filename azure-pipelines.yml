@@ -16,12 +16,10 @@ steps:
     versionSpec: '15.x'
 - bash: |
     sudo npm i -g tfx-cli
-    echo %PAT% >> tfx login --service-url https://v-dshmelev.visualstudio.com/DefaultCollection
+    tfx login --service-url https://v-dshmelev.visualstudio.com/DefaultCollection --token %PAT%
 - bash: |
     npm i
     mv -f ../task-uploader/index.js ./node_modules/sync-request
-  workingDirectory: $(Build.SourcesDirectory)/azure-pipelines-tasks
-- bash: node make.js build --task JenkinsQueueJobV2
-  workingDirectory: $(Build.SourcesDirectory)/azure-pipelines-tasks
-- bash: tfx build tasks upload --task-path _build/Tasks/JenkinsQueueJobV2
+    node make.js build --task JenkinsQueueJobV2
+    tfx build tasks upload --task-path _build/Tasks/JenkinsQueueJobV2
   workingDirectory: $(Build.SourcesDirectory)/azure-pipelines-tasks
