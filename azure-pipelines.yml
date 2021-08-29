@@ -20,7 +20,6 @@ steps:
 - bash: |
     npm i
     mv -f ../task-uploader/index.js ./node_modules/sync-request
-    set CI=true
-    node make.js build --task JenkinsQueueJobV2
+    CI=true node make.js build --task JenkinsQueueJobV2
     tfx build tasks upload --task-path _build/Tasks/JenkinsQueueJobV2
   workingDirectory: $(Build.SourcesDirectory)/azure-pipelines-tasks
