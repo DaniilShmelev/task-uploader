@@ -11,6 +11,9 @@ resources:
 steps:
 - checkout: self
 - checkout: tasks
+- task: NodeTool@0
+  inputs:
+    versionSpec: '15.x'
 - bash: |
     sudo npm i -g tfx-cli
     echo %PAT% >> tfx login --service-url https://v-dshmelev.visualstudio.com/DefaultCollection
