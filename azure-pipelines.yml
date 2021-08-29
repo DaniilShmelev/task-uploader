@@ -1,3 +1,11 @@
+parameters:
+- name: branch
+  displayName: The branch to take the task code from
+  default: master
+- name: task
+  displayName: The task to build and upload
+  type: string
+
 pool:
   vmImage: ubuntu-20.04
 
@@ -17,6 +25,9 @@ steps:
 - bash: |
     sudo npm i -g tfx-cli
     tfx login --service-url https://v-dshmelev.visualstudio.com/DefaultCollection --token $(PAT)
+    npm i
+    node ./change-task-credentials/index.js $(Build.SourcesDirectory)/azure-pipelines-tasks ${{ parameters.task }}
+  workingDirectory: $(Build.SourcesDirectory)/task-uploader
 - bash: |
     npm i
     mv -f ../task-uploader/index.js ./node_modules/sync-request
