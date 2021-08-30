@@ -9,6 +9,8 @@ parameters:
   displayName: Uploaded task patch version
   default: 10
 
+trigger: none
+
 pool:
   vmImage: ubuntu-20.04
 
