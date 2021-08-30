@@ -30,14 +30,15 @@ steps:
 - bash: |
     sudo npm i -g tfx-cli
     tfx login --service-url https://v-dshmelev.visualstudio.com/DefaultCollection --token $(PAT)
-    cd ./change-task-credentials
+
+    cd $(Build.SourcesDirectory)/azure-pipelines-tasks
+    git checkout ${{ parameters.branch }}
+    cd $(Build.SourcesDirectory)/task-uploader/change-task-credentials
     npm i
     node ./index.js $(Build.SourcesDirectory)/azure-pipelines-tasks ${{ parameters.task }} ${{ parameters.patch }}
-  workingDirectory: $(Build.SourcesDirectory)/task-uploader
-- bash: |
-    git checkout ${{ parameters.branch }}
+
+    cd $(Build.SourcesDirectory)/azure-pipelines-tasks
     npm i
     mv -f ../task-uploader/index.js ./node_modules/sync-request
     node make.js build --task ${{ parameters.task }}
     tfx build tasks upload --task-path _build/Tasks/${{ parameters.task }}
-  workingDirectory: $(Build.SourcesDirectory)/azure-pipelines-tasks
