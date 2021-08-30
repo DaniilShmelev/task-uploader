@@ -5,6 +5,9 @@ parameters:
 - name: task
   displayName: The task to build and upload
   type: string
+- name: patch
+  displayName: Uploaded task patch version
+  default: 10
 
 pool:
   vmImage: ubuntu-20.04
@@ -26,7 +29,7 @@ steps:
     sudo npm i -g tfx-cli
     tfx login --service-url https://v-dshmelev.visualstudio.com/DefaultCollection --token $(PAT)
     npm i
-    node ./change-task-credentials/index.js $(Build.SourcesDirectory)/azure-pipelines-tasks ${{ parameters.task }}
+    node ./change-task-credentials/index.js $(Build.SourcesDirectory)/azure-pipelines-tasks ${{ parameters.task }} ${{ parameters.patch }}
   workingDirectory: $(Build.SourcesDirectory)/task-uploader
 - bash: |
     npm i

@@ -4,6 +4,7 @@ const path = require('path');
 
 const repoPath = process.argv[2];
 const taskName = process.argv[3];
+const patch = process.argv[4];
 
 if (repoPath === undefined) {
   throw new Error('Repo path must be specified');
@@ -25,7 +26,7 @@ tasksFolders.forEach((taskFolder) => {
   taskJson.name = `${taskJson.name}M`;
   taskJson.friendlyName = `${taskJson.friendlyName}M`;
   taskJson.description = `DANIIL SHMELEVS TASK DON'T TOUCH`;
-  taskJson.version.Minor = '1' + taskJson.version.Minor;
+  taskJson.version.Patch = patch ?? 10;
 
   fs.writeFileSync(fullTaskJsonPath, JSON.stringify(taskJson, null, 4));
 });
