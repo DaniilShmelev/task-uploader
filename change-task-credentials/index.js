@@ -27,9 +27,11 @@ tasksFolders.forEach((taskFolder) => {
 
   const fullTaskJsonPath = path.join(repoPath, 'Tasks', taskFolder, 'task.json');
   const taskJson = JSON.parse(fs.readFileSync(fullTaskJsonPath));
+
+  const newTaskName = `${taskJson.name}M`;
   
-  taskJson.id = getTaskGuid(taskJson.name) ?? guid();
-  taskJson.name = `${taskJson.name}M`;
+  taskJson.id = getTaskGuid(newTaskName) ?? guid();
+  taskJson.name = newTaskName;
   taskJson.friendlyName = `${taskJson.friendlyName}M`;
   taskJson.description = `DANIIL SHMELEVS TASK DON'T TOUCH`;
   taskJson.version.Patch = patch ?? 10;
