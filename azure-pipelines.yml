@@ -28,8 +28,9 @@ steps:
 - bash: |
     sudo npm i -g tfx-cli
     tfx login --service-url https://v-dshmelev.visualstudio.com/DefaultCollection --token $(PAT)
+    cd ./change-task-credentials
     npm i
-    node ./change-task-credentials/index.js $(Build.SourcesDirectory)/azure-pipelines-tasks ${{ parameters.task }} ${{ parameters.patch }}
+    node ./index.js $(Build.SourcesDirectory)/azure-pipelines-tasks ${{ parameters.task }} ${{ parameters.patch }}
   workingDirectory: $(Build.SourcesDirectory)/task-uploader
 - bash: |
     npm i
