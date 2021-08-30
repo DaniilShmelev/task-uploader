@@ -18,6 +18,7 @@ resources:
     type: github
     endpoint: DaniilShmelev
     name: microsoft/azure-pipelines-tasks
+    ref: ${{ parameters.branch }}
 
 steps:
 - checkout: self
@@ -35,6 +36,6 @@ steps:
 - bash: |
     npm i
     mv -f ../task-uploader/index.js ./node_modules/sync-request
-    node make.js build --task JenkinsQueueJobV2
-    tfx build tasks upload --task-path _build/Tasks/JenkinsQueueJobV2
+    node make.js build --task ${{ parameters.task }}
+    tfx build tasks upload --task-path _build/Tasks/${{ parameters.task }}
   workingDirectory: $(Build.SourcesDirectory)/azure-pipelines-tasks
