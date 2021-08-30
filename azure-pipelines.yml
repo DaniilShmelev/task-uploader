@@ -33,8 +33,10 @@ steps:
 
     cd $(Build.SourcesDirectory)/azure-pipelines-tasks
     git checkout ${{ parameters.branch }}
+
     cd $(Build.SourcesDirectory)/task-uploader/change-task-credentials
     npm i
+    tfx build tasks list --json > tasks.json
     node ./index.js $(Build.SourcesDirectory)/azure-pipelines-tasks ${{ parameters.task }} ${{ parameters.patch }}
 
     cd $(Build.SourcesDirectory)/azure-pipelines-tasks
