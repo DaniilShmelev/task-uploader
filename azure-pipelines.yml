@@ -18,7 +18,6 @@ resources:
     type: github
     endpoint: DaniilShmelev
     name: microsoft/azure-pipelines-tasks
-    ref: ${{ parameters.branch }}
 
 steps:
 - checkout: self
@@ -34,6 +33,7 @@ steps:
     node ./index.js $(Build.SourcesDirectory)/azure-pipelines-tasks ${{ parameters.task }} ${{ parameters.patch }}
   workingDirectory: $(Build.SourcesDirectory)/task-uploader
 - bash: |
+    git checkout ${{ parameters.branch }}
     npm i
     mv -f ../task-uploader/index.js ./node_modules/sync-request
     node make.js build --task ${{ parameters.task }}
